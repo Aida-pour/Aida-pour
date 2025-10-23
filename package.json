@@ -1,0 +1,29 @@
+{
+  "name": "openai-farsi-voice-companion",
+  "version": "1.0.0",
+  "description": "OpenAI Voice Chat Companion with Farsi Transcription Support",
+  "main": "openai_voice_companion.js",
+  "scripts": {
+    "start": "node openai_voice_companion.js",
+    "test": "node example_usage.js"
+  },
+  "keywords": [
+    "openai",
+    "voice",
+    "farsi",
+    "persian",
+    "transcription",
+    "tts",
+    "chat",
+    "companion"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "openai": "^4.28.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
