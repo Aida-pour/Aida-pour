@@ -250,6 +250,113 @@ See `example_usage.py` or `example_usage.js` for comprehensive examples includin
 - Multilingual conversations
 - Custom system prompts
 
+---
+
+## Vonage + OpenAI Integration (NEW!)
+
+Take your AI voice companion to the next level with phone call integration!
+
+### What's New?
+
+Combine Vonage Voice API with OpenAI to create a **phone-based AI voice companion**:
+- ☎️ **Inbound Calls**: Answer calls automatically with AI
+- 📞 **Outbound Calls**: Make AI-powered calls programmatically
+- 🎙️ **Real-time Transcription**: Farsi speech-to-text via Whisper
+- 🤖 **Intelligent Responses**: GPT-4 powered conversations
+- 🌐 **WebRTC Support**: Browser-based calling (no phone needed)
+- 💬 **SMS Integration**: Send conversation summaries
+- 📊 **Call Analytics**: Track and analyze conversations
+
+### Quick Start with Vonage
+
+```bash
+# Install dependencies
+pip install -r requirements.txt  # Python
+npm install                       # Node.js
+
+# Set up environment
+export OPENAI_API_KEY='your-openai-key'
+export VONAGE_API_KEY='your-vonage-key'
+export VONAGE_API_SECRET='your-vonage-secret'
+export VONAGE_PHONE_NUMBER='+12345678900'
+export BASE_URL='https://your-server.com'
+
+# Start the server
+python vonage_openai_voice_companion.py  # Python
+node vonage_openai_voice_companion.js    # Node.js
+```
+
+### How It Works
+
+```
+📱 User calls your number
+    ↓
+📞 Vonage receives call
+    ↓
+🎙️ Records user speech
+    ↓
+📝 OpenAI Whisper transcribes (Farsi)
+    ↓
+🤖 GPT-4 generates response
+    ↓
+🔊 Response spoken back to user
+    ↓
+🔄 Conversation continues
+```
+
+### Use Cases
+
+- **Customer Support**: 24/7 automated phone support in Farsi
+- **Information Hotline**: Provide information via phone calls
+- **Language Learning**: Practice Farsi conversation by phone
+- **Appointment Booking**: Voice-based scheduling system
+- **Elder Care**: AI companion accessible via phone
+- **Accessibility**: Voice interface for applications
+
+### Documentation
+
+See **[VONAGE_INTEGRATION_GUIDE.md](VONAGE_INTEGRATION_GUIDE.md)** for:
+- Complete setup instructions
+- Vonage account configuration
+- Webhook implementation
+- Production deployment guide
+- Cost optimization tips
+- Security best practices
+
+### Example Code
+
+**Python:**
+```python
+from vonage_openai_voice_companion import VonageOpenAIVoiceCompanion
+
+# Initialize
+companion = VonageOpenAIVoiceCompanion()
+
+# Create server with webhooks
+app = companion.create_flask_app(base_url="https://your-server.com")
+app.run()
+
+# Make outbound call
+companion.make_call(to_number="+12345678900", base_url="https://your-server.com")
+```
+
+**Node.js:**
+```javascript
+const VonageOpenAIVoiceCompanion = require('./vonage_openai_voice_companion');
+
+// Initialize
+const companion = new VonageOpenAIVoiceCompanion();
+
+// Create server
+const app = companion.createExpressApp('https://your-server.com');
+app.listen(3000);
+
+// Make outbound call
+await companion.makeCall('+12345678900', 'https://your-server.com');
+```
+
+---
+
 ### License
 
 MIT License - See LICENSE file for details

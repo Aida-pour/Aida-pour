@@ -51,6 +51,12 @@ conversation.json
 test_conversation.json
 my_conversation.json
 *.conversation.json
+call_conversation_*.json
+
+# Vonage
+private.key
+*.key
+vonage_jwt.txt
 
 # IDE
 .vscode/
