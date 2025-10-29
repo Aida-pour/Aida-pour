@@ -19,6 +19,62 @@
 
 ---
 
+## 🎓 NEW: Penglish - Interactive Farsi Learning Platform
+
+> **Learn Farsi the fun way using Penglish (romanized Persian)!**
+
+A beautiful, gamified language learning platform inspired by Duolingo. Master Farsi pronunciation and vocabulary using Penglish before learning the Persian alphabet.
+
+### ✨ Features
+
+- 🎮 **Gamified Learning**: XP, levels, streaks, and achievements
+- 📚 **Interactive Lessons**: Multiple exercise types (multiple choice, fill-in-blank, translation)
+- 🗣️ **Penglish Focus**: Learn Farsi using Latin characters (romanization)
+- 🎨 **Beautiful UI**: Playful, colorful design with smooth animations
+- 🤖 **AI Integration**: Voice features powered by OpenAI
+- 📱 **Responsive**: Works on desktop, tablet, and mobile
+- 🆓 **Open Source**: Free to use and contribute
+
+### 🚀 Quick Start
+
+```bash
+cd penglish-platform
+
+# Install and start backend
+cd backend
+npm install
+npm run prisma:generate && npm run prisma:migrate
+npm run dev  # Runs on http://localhost:5001
+
+# Install and start frontend (new terminal)
+cd frontend
+npm install
+npm run dev  # Runs on http://localhost:3000
+```
+
+Visit http://localhost:3000 and start learning!
+
+### 📖 Learn More
+
+- **[Full Documentation](penglish-platform/README.md)** - Complete guide
+- **[Quick Start Guide](penglish-platform/QUICK_START.md)** - Get running in 5 minutes
+- **[Architecture](PENGLISH_PLATFORM_ARCHITECTURE.md)** - Technical details
+
+### 🎯 What You'll Learn
+
+**Unit 1: Greetings** - Salam va Moghademaat
+- Salam (Hello), Chetori? (How are you?), Khoda hafez (Goodbye)
+
+**Unit 2: Family** - Khanevadeh
+- Pedar (Father), Madar (Mother), Baradar (Brother), Khahar (Sister)
+
+**Unit 3: Numbers** - Adad
+- Yek (1), Do (2), Se (3), Chahar (4), Panj (5)...
+
+*More units coming soon!*
+
+---
+
 ## OpenAI Voice Chat Companion with Farsi Support
 
 A comprehensive voice-enabled chat companion using OpenAI's APIs with full support for Farsi (Persian) language transcription and text-to-speech.
