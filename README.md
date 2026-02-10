@@ -16,3 +16,10 @@
 - Focus on observability, scaling, and operational excellence  
 
 📫 [LinkedIn](https://www.linkedin.com/in/aidapourshirazi)
+
+## New project concept
+- [Farsi Learning iOS App Concept (Penglish Play)](farsi-learning-ios-plan.md)
+
+- Suggested app name: **Parya**
+
+- New focus: **AI Tutor + AI Companions** for spoken Farsi practice with cultural context.
