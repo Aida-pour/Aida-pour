@@ -27,7 +27,7 @@ echo -e "${NC}"
 # CONFIGURATION — Edit these before running
 # ═══════════════════════════════════════════════════════════════════════════════
 
-PROJECT_ID=""                      # Your GCP project ID (leave blank to auto-detect)
+PROJECT_ID="kalabekala"            # Your GCP project ID (leave blank to auto-detect)
 VM_NAME="family-vpn-server"        # Name for your VM
 REGION="europe-west3"              # Frankfurt — best for Iran latency
 ZONE="europe-west3-a"

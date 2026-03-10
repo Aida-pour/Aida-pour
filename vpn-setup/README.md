@@ -14,7 +14,7 @@ Two layers of protection: **Outline** (easy daily use) + **Xray REALITY** (when 
           │  V2Box / v2rayNG          ←── Fallback
           │
           ▼
-  Your VPS (DigitalOcean / Vultr / Oracle Cloud)
+  Your VPS (GCP · kalabekala project)
   ├── Outline Server (Shadowsocks · port random)
   └── Xray VLESS+REALITY (masquerades as microsoft.com · port 443)
           │
@@ -28,27 +28,32 @@ Two layers of protection: **Outline** (easy daily use) + **Xray REALITY** (when 
 
 | File | What it does |
 |------|-------------|
+| `00-gcp-setup.sh` | **One-command GCP deploy** — creates VM + installs everything |
 | `01-outline-server.sh` | Installs Outline VPN (easiest for family) |
 | `02-xray-reality.sh` | Installs Xray VLESS+REALITY (hardest to block) |
 | `03-xray-3xui-panel.sh` | Installs web GUI panel to manage Xray users |
+| `04-rustdesk-server.sh` | Installs RustDesk self-hosted remote desktop relay |
 | `client-guide-farsi.md` | Step-by-step guide in Farsi+English for parents |
+| `client-guide-remote-farsi.md` | RustDesk remote desktop guide in Farsi+English |
 
 ---
 
-## Step 1 — Get a VPS
+## Step 1 — Deploy to GCP (One Command)
 
-You need a server **outside Iran** with a public IP.
+We use the **kalabekala** GCP project with an `e2-micro` VM in Frankfurt (lowest latency from Iran).
 
-| Provider | Cost | Notes |
-|----------|------|-------|
-| **Oracle Cloud Free Tier** | Free forever | ARM VM, best value, requires credit card for signup |
-| **DigitalOcean** | $6/month | Simple, reliable, Frankfurt or Amsterdam for lower latency |
-| **Vultr** | $5/month | Many locations, good for this use |
-| **Hetzner** | €4/month | Cheapest paid option, Europe only |
+```bash
+# Make sure gcloud is installed and authenticated:
+gcloud auth login
+gcloud config set project kalabekala
 
-**Recommended location:** Frankfurt, Amsterdam, or Helsinki (lowest latency from Iran)
+# Run the all-in-one setup:
+bash vpn-setup/00-gcp-setup.sh
+```
 
-Once you have a VPS, note the **public IP address**.
+This creates the VM, reserves a static IP, installs Outline + Xray REALITY + RustDesk, and prints all keys.
+
+**Cost:** ~$7/month for e2-micro (or free with GCP free tier credits). Static IP is free while VM runs.
 
 ---
 
