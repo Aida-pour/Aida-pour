@@ -17,5 +17,3 @@
 
 📫 [LinkedIn](https://www.linkedin.com/in/aidapourshirazi)
 
-## New project concept
-- [Farsi Learning iOS App Concept (Penglish Play)](farsi-learning-ios-plan.md)
