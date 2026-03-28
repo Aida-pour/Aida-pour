@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-pipeline
+  namespace: production
+  labels:
+    app: qoqnoos-ai-pipeline
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qoqnoos-ai-pipeline
+  template:
+    metadata:
+      labels:
+        app: qoqnoos-ai-pipeline
+    spec:
+      containers:
+        - name: ai-pipeline
+          image: us-central1-docker.pkg.dev/PROJECT_ID/qoqnoos/ai-pipeline:latest
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-pipeline-service
+  namespace: production
+spec:
+  selector:
+    app: qoqnoos-ai-pipeline
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
