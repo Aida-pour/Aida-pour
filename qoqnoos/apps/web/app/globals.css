@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-phoenix-warm text-gray-900 dark:bg-phoenix-deep dark:text-white; }
+  [dir='rtl'] { text-align: right; }
+}
+@layer components {
+  .btn-phoenix { @apply bg-phoenix-gold hover:bg-phoenix-gold/90 text-phoenix-deep font-bold px-8 py-4 rounded-full text-lg transition-all hover:scale-105; }
+  .btn-ghost { @apply border border-phoenix-gold/50 text-white hover:bg-phoenix-gold/10 px-8 py-4 rounded-full text-lg transition-all; }
+  .card-phoenix { @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6; }
+}
