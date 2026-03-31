@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Qoqnoos", "slug": "qoqnoos", "version": "1.0.0",
+    "orientation": "portrait", "scheme": "qoqnoos",
+    "splash": { "backgroundColor": "#1A1040" },
+    "ios": { "bundleIdentifier": "com.qoqnoos.app" },
+    "android": { "package": "com.qoqnoos.app" },
+    "plugins": ["expo-router"]
+  }
+}

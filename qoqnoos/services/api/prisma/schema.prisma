@@ -1,0 +1,282 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(cuid())
+  firebaseUid       String    @unique
+  email             String    @unique
+  displayName       String?
+  avatarUrl         String?
+  bio               String?
+  language          Language  @default(EN)
+  prefersDarkMode   Boolean   @default(false)
+  isRTL             Boolean   @default(false)
+  phoneNumber       String?
+  dateOfBirth       DateTime?
+  gender            Gender?
+  timezone          String    @default("America/Los_Angeles")
+  persianHeritage   Boolean   @default(false)
+  diasporaLocation  String?
+  originCity        String?
+  subscription      Subscription?
+  stripeCustomerId  String?   @unique
+  wellnessProfile   WellnessProfile?
+  companionSessions CompanionSession[]
+  journalEntries    JournalEntry[]
+  moodLogs          MoodLog[]
+  bookmarks         Bookmark[]
+  contentProgress   ContentProgress[]
+  therapySessions   TherapySession[]
+  pushTokens        PushToken[]
+  emailPrefs        EmailPreference?
+  marketingConsent  Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  deletedAt         DateTime?
+  @@map("users")
+}
+
+model WellnessProfile {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id])
+  primaryGoals          Goal[]
+  currentChallenges     String[]
+  traumaAreas           TraumaArea[]
+  therapyHistory        Boolean   @default(false)
+  meditationExperience  ExperienceLevel @default(BEGINNER)
+  preferredModalities   Modality[]
+  intakeCompletedAt     DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  @@map("wellness_profiles")
+}
+
+model Subscription {
+  id                  String             @id @default(cuid())
+  userId              String             @unique
+  user                User               @relation(fields: [userId], references: [id])
+  tier                SubscriptionTier   @default(FREE)
+  status              SubscriptionStatus @default(ACTIVE)
+  stripeSubscriptionId String?           @unique
+  stripePriceId       String?
+  currentPeriodStart  DateTime?
+  currentPeriodEnd    DateTime?
+  cancelAtPeriodEnd   Boolean            @default(false)
+  trialEnd            DateTime?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  @@map("subscriptions")
+}
+
+model CompanionSession {
+  id                String    @id @default(cuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id])
+  sessionType       SessionType @default(TEXT)
+  language          Language  @default(EN)
+  messages          CompanionMessage[]
+  emotionalState    String?
+  topicsDiscussed   String[]
+  psychFrameworks   String[]
+  summary           String?
+  startedAt         DateTime  @default(now())
+  endedAt           DateTime?
+  createdAt         DateTime  @default(now())
+  @@map("companion_sessions")
+}
+
+model CompanionMessage {
+  id          String           @id @default(cuid())
+  sessionId   String
+  session     CompanionSession @relation(fields: [sessionId], references: [id])
+  role        MessageRole
+  content     String
+  contentFa   String?
+  framework   String?
+  emotion     String?
+  tokens      Int?
+  createdAt   DateTime         @default(now())
+  @@map("companion_messages")
+}
+
+model ContentItem {
+  id              String          @id @default(cuid())
+  type            ContentType
+  title           String
+  titleFa         String?
+  slug            String          @unique
+  description     String?
+  thumbnailUrl    String?
+  mediaUrl        String?
+  duration        Int?
+  author          String?
+  framework       String[]
+  tags            String[]
+  language        Language        @default(EN)
+  isPremium       Boolean         @default(false)
+  tier            SubscriptionTier @default(FREE)
+  isPublished     Boolean         @default(false)
+  publishedAt     DateTime?
+  viewCount       Int             @default(0)
+  likeCount       Int             @default(0)
+  bookmarks       Bookmark[]
+  progress        ContentProgress[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  @@map("content_items")
+}
+
+model ContentProgress {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  contentId   String
+  content     ContentItem @relation(fields: [contentId], references: [id])
+  progress    Float       @default(0)
+  completed   Boolean     @default(false)
+  @@unique([userId, contentId])
+  @@map("content_progress")
+}
+
+model Bookmark {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  contentId   String
+  content     ContentItem @relation(fields: [contentId], references: [id])
+  createdAt   DateTime    @default(now())
+  @@unique([userId, contentId])
+  @@map("bookmarks")
+}
+
+model JournalEntry {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  title           String?
+  content         String
+  contentFa       String?
+  mood            Int?
+  tags            String[]
+  aiReflection    String?
+  frameworks      String[]
+  isPrivate       Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  @@map("journal_entries")
+}
+
+model MoodLog {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  mood      Int
+  energy    Int
+  anxiety   Int
+  notes     String?
+  context   String?
+  createdAt DateTime  @default(now())
+  @@map("mood_logs")
+}
+
+model Therapist {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  bio             String?
+  specialties     String[]
+  languages       Language[]
+  licenseNumber   String?
+  hourlyRate      Int?
+  dailyRoomUrl    String?
+  isVerified      Boolean   @default(false)
+  isActive        Boolean   @default(true)
+  sessions        TherapySession[]
+  availability    TherapistAvailability[]
+  createdAt       DateTime  @default(now())
+  @@map("therapists")
+}
+
+model TherapistAvailability {
+  id          String    @id @default(cuid())
+  therapistId String
+  therapist   Therapist @relation(fields: [therapistId], references: [id])
+  dayOfWeek   Int
+  startTime   String
+  endTime     String
+  @@map("therapist_availability")
+}
+
+model TherapySession {
+  id              String          @id @default(cuid())
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+  therapistId     String
+  therapist       Therapist       @relation(fields: [therapistId], references: [id])
+  dailyRoomUrl    String
+  scheduledAt     DateTime
+  durationMinutes Int             @default(50)
+  status          SessionStatus   @default(SCHEDULED)
+  notes           String?
+  paymentId       String?
+  createdAt       DateTime        @default(now())
+  @@map("therapy_sessions")
+}
+
+model AdPlacement {
+  id            String    @id @default(cuid())
+  name          String
+  type          AdType
+  placement     String
+  targetUrl     String
+  sponsorName   String
+  targetTier    SubscriptionTier[]
+  impressions   Int       @default(0)
+  clicks        Int       @default(0)
+  isActive      Boolean   @default(true)
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime  @default(now())
+  @@map("ad_placements")
+}
+
+model PushToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  token     String    @unique
+  platform  String
+  createdAt DateTime  @default(now())
+  @@map("push_tokens")
+}
+
+model EmailPreference {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+  weeklyDigest    Boolean   @default(true)
+  sessionReminders Boolean  @default(true)
+  promotions      Boolean   @default(false)
+  @@map("email_preferences")
+}
+
+enum SubscriptionTier { FREE PREMIUM CLINICAL RETREAT }
+enum SubscriptionStatus { ACTIVE PAST_DUE CANCELED TRIALING INCOMPLETE }
+enum Language { EN FA }
+enum Gender { MALE FEMALE NON_BINARY PREFER_NOT_TO_SAY }
+enum SessionType { TEXT VOICE VIDEO }
+enum MessageRole { USER ASSISTANT SYSTEM }
+enum ContentType { MEDITATION PODCAST BOOK_RECOMMENDATION ARTICLE VIDEO BREATHWORK SOUND_BATH EXERCISE WORKSHOP }
+enum Goal { TRAUMA_HEALING RELATIONSHIP_HEALTH ANXIETY_MANAGEMENT GRIEF_PROCESSING CULTURAL_IDENTITY SELF_DISCOVERY FAMILY_DYNAMICS CAREER_BURNOUT SPIRITUAL_GROWTH }
+enum TraumaArea { CHILDHOOD RELATIONSHIP CULTURAL_DISPLACEMENT WAR_REVOLUTION LOSS_GRIEF IDENTITY }
+enum Modality { TALK_THERAPY MEDITATION BREATHWORK SOMATIC JOURNALING SOUND_HEALING YOGA PSYCHEDELIC_ASSISTED }
+enum ExperienceLevel { BEGINNER INTERMEDIATE ADVANCED }
+enum PaymentStatus { PENDING SUCCEEDED FAILED REFUNDED }
+enum SessionStatus { SCHEDULED IN_PROGRESS COMPLETED CANCELED NO_SHOW }
+enum AdType { BANNER PODCAST_SPONSOR BOOK_RECOMMENDATION RETREAT_PROMOTION NATIVE }

@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "jsx": "preserve", "noEmit": true, "paths": { "@/*": ["./*"] } },
+  "include": ["**/*.ts", "**/*.tsx"]
+}
